@@ -78,13 +78,8 @@ const SVG_EXIT = `
   </svg>`;
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  const startButton = document.getElementById('start-button');
-  const gameContainer = document.getElementById('game-container');
-  const gameBoard = document.getElementById('game-board');
-  const scoreDisplay = document.getElementById('score');
-  startButton.addEventListener('click', initializeGame);
+  document.getElementById('start-button').addEventListener('click', initializeGame);
 });
-
 
 function initializeGame() {
   document.getElementById('game-container').style.display = 'block';
@@ -349,70 +344,54 @@ function showDinoEatmouseAnimation() {
   }, 500);
 }
 
-  let previousBoard = [];
-
-function updateDisplay() {
-  const gameBoard = document.getElementById('game-board');
-  
-  for (let y = 0; y < BOARD_HEIGHT; y++) {
-    for (let x = 0; x < BOARD_WIDTH; x++) {
-      if (board[y][x] !== previousBoard[y][x]) {
-        const cell = gameBoard.children[y * BOARD_WIDTH + x];
-        switch (board[y][x]) {
-          case 'mouse':
-            cell.innerHTML = SVG_MOUSE;
-            break;
-          case 'cookie':
-            cell.innerHTML = SVG_COOKIE;
-            break;
-          case 'movable':
-            cell.style.backgroundColor = '#c0c0c0';
-            break;
-          case 'dino':
-            cell.innerHTML = SVG_CAT;
-            break;
-          case 'crown':
-            cell.innerHTML = SVG_CROWN;
-            break;
-          case 'exit':
-            cell.innerHTML = SVG_EXIT;
-            break;
-          default:
-            cell.innerHTML = '';
-            cell.style.backgroundColor = '#000';
+    function updateDisplay() {
+      const gameBoard = document.getElementById('game-board');
+      gameBoard.innerHTML = '';
+      for (let y = 0; y < BOARD_HEIGHT; y++) {
+        for (let x = 0; x < BOARD_WIDTH; x++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          switch (board[y][x]) {
+            case 'mouse':
+              cell.innerHTML = SVG_mouse;
+              break;
+            case 'cookie':
+              cell.innerHTML = SVG_COOKIE;
+              break;
+            case 'movable':
+              cell.style.backgroundColor = '#c0c0c0';
+              break;
+            case 'dino':
+              cell.innerHTML = SVG_CAT;
+              break;
+            case 'crown':
+              cell.innerHTML = SVG_CROWN;
+              break;
+            case 'exit':
+              cell.innerHTML = SVG_EXIT;
+              break;
+          }
+          gameBoard.appendChild(cell);
         }
       }
     }
-  }
-  previousBoard = JSON.parse(JSON.stringify(board)); // Deep copy to track changes
-}
 
-
-
-let lastKeyPressTime = 0;
-const DEBOUNCE_DELAY = 100; // milliseconds
-
-document.addEventListener('keydown', (event) => {
-  const currentTime = new Date().getTime();
-  if (currentTime - lastKeyPressTime > DEBOUNCE_DELAY) {
-    lastKeyPressTime = currentTime;
-    switch (event.key) {
-      case 'ArrowUp':
-        movemouse(0, -1);
-        break;
-      case 'ArrowDown':
-        movemouse(0, 1);
-        break;
-      case 'ArrowLeft':
-        movemouse(-1, 0);
-        break;
-      case 'ArrowRight':
-        movemouse(1, 0);
-        break;
-    }
-  }
-});
-
+    document.addEventListener('keydown', (event) => {
+      switch (event.key) {
+        case 'ArrowUp':
+          movemouse(0, -1);
+          break;
+        case 'ArrowDown':
+          movemouse(0, 1);
+          break;
+        case 'ArrowLeft':
+          movemouse(-1, 0);
+          break;
+        case 'ArrowRight':
+          movemouse(1, 0);
+          break;
+      }
+    });
 
     initializeGame();
     document.getElementById('start-button').addEventListener('click', initializeGame);
