@@ -87,13 +87,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
   startButton.addEventListener('click', initializeGame);
 });
 
+function initializeGameBoard() {
+  gameBoard.innerHTML = ''; // Clear previous cells
+  for (let y = 0; y < BOARD_HEIGHT; y++) {
+    for (let x = 0; x < BOARD_WIDTH; x++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      gameBoard.appendChild(cell);
+    }
+  }
+}
 
-function initializeGame() {
+
+  function initializeGame() {
   document.getElementById('game-container').style.display = 'block';
   document.getElementById('start-button').style.display = 'none';
   clearInterval(catInterval);
 
   gameOver = false; // Reset the gameOver flag
+
+  initializeGameBoard(); // Add this line to initialize the game board
 
   for (let y = 0; y < BOARD_HEIGHT; y++) {
     board[y] = [];
@@ -117,40 +130,33 @@ function initializeGame() {
   }
 
   cats = [];
-  const corners = [{
-      x: 0,
-      y: 0
-    }, {
-      x: BOARD_WIDTH - 1,
-      y: 0
-    },
-    {
-      x: 0,
-      y: BOARD_HEIGHT - 1
-    }, {
-      x: BOARD_WIDTH - 1,
-      y: BOARD_HEIGHT - 1
-    }
+  const corners = [
+    { x: 0, y: 0 }, 
+    { x: BOARD_WIDTH - 1, y: 0 },
+    { x: 0, y: BOARD_HEIGHT - 1 }, 
+    { x: BOARD_WIDTH - 1, y: BOARD_HEIGHT - 1 }
   ];
-      for (let i = 0; i < 3; i++) {
-        let corner = corners[Math.floor(Math.random() * corners.length)];
-        let dino;
-        do {
-          dino = {
-            x: corner.x + Math.floor(Math.random() * 3),
-            y: corner.y + Math.floor(Math.random() * 3)
-          };
-        } while (
-          dino.x < 0 || dino.x >= BOARD_WIDTH || dino.y < 0 || dino.y >= BOARD_HEIGHT ||
-          board[dino.y][dino.x] !== 'empty'
-        );
-        board[dino.y][dino.x] = 'dino';
-        cats.push(dino);
-      }
 
-      score = 0;
-      updateDisplay();
-    }
+  for (let i = 0; i < 3; i++) {
+    let corner = corners[Math.floor(Math.random() * corners.length)];
+    let dino;
+    do {
+      dino = {
+        x: corner.x + Math.floor(Math.random() * 3),
+        y: corner.y + Math.floor(Math.random() * 3)
+      };
+    } while (
+      dino.x < 0 || dino.x >= BOARD_WIDTH || dino.y < 0 || dino.y >= BOARD_HEIGHT ||
+      board[dino.y][dino.x] !== 'empty'
+    );
+    board[dino.y][dino.x] = 'dino';
+    cats.push(dino);
+  }
+
+  score = 0;
+  updateDisplay();
+}
+
 
     function showExitAnimation() {
       const gameBoard = document.getElementById('game-board');
@@ -358,7 +364,9 @@ function updateDisplay() {
   for (let y = 0; y < BOARD_HEIGHT; y++) {
     for (let x = 0; x < BOARD_WIDTH; x++) {
       if (board[y][x] !== previousBoard[y][x]) {
-        const cell = gameBoard.children[y * BOARD_WIDTH + x];
+        const cellIndex = y * BOARD_WIDTH + x;
+        const cell = gameBoard.children[cellIndex];
+        if (!cell) continue; // Ensure cell exists before accessing
         switch (board[y][x]) {
           case 'mouse':
             cell.innerHTML = SVG_MOUSE;
@@ -387,6 +395,7 @@ function updateDisplay() {
   }
   previousBoard = JSON.parse(JSON.stringify(board)); // Deep copy to track changes
 }
+
 
 
     document.addEventListener('keydown', (event) => {
