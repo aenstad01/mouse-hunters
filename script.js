@@ -78,8 +78,13 @@ const SVG_EXIT = `
   </svg>`;
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  document.getElementById('start-button').addEventListener('click', initializeGame);
+  const startButton = document.getElementById('start-button');
+  const gameContainer = document.getElementById('game-container');
+  const gameBoard = document.getElementById('game-board');
+  const scoreDisplay = document.getElementById('score');
+  startButton.addEventListener('click', initializeGame);
 });
+
 
 function initializeGame() {
   document.getElementById('game-container').style.display = 'block';
