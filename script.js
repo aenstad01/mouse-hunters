@@ -77,9 +77,16 @@ const SVG_EXIT = `
     <path d="M5,15 Q10,5 15,15" stroke="#5D3A1A" stroke-width="1" fill="none"/>
   </svg>`;
 
+let startButton, gameContainer, gameBoard, scoreDisplay;
+
 document.addEventListener('DOMContentLoaded', (event) => {
-  document.getElementById('start-button').addEventListener('click', initializeGame);
+  startButton = document.getElementById('start-button');
+  gameContainer = document.getElementById('game-container');
+  gameBoard = document.getElementById('game-board');
+  scoreDisplay = document.getElementById('score');
+  startButton.addEventListener('click', initializeGame);
 });
+
 
 function initializeGame() {
   document.getElementById('game-container').style.display = 'block';
