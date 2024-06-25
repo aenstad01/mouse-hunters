@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mouse Hunters</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <button id="start-button">Start New Game</button>
-    <div id="game-container">
-      <div id="instructions">
-        Eat all of the cheese, then find the exit. But be careful- the cats are hungry too! (I know they don't look like cats yet... I'm working on it)
-      </div>
-      <br>
-      <div id="game-board"></div>
-      <div id="score">Score: 0</div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouse Hunters</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="game-container">
+    <div id="instructions">
+      Eat all of the cheese, then find the exit. But be careful - the cats are hungry too! (I know they don't look like cats yet... I'm working on it)
     </div>
-    <script src="script.js"></script>
-  </body>
+    <button id="start-button">Start New Game</button>
+    <div id="game-board"></div>
+    <div id="info-bar">
+      <div id="score">Score: 0</div>
+      <div id="timer">Time: 0s</div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
 </html>
