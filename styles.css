@@ -45,6 +45,9 @@ body {
 
 #instructions {
   color: white;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-bottom: 20px;
 }
 
 @keyframes flash {
