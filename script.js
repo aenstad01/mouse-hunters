@@ -344,43 +344,38 @@
     }, 500);
   }
   
-  let previousBoard = [];
-  
   function updateDisplay() {
-    const gameBoard = document.getElementById('game-board');
-    
-    for (let y = 0; y < BOARD_HEIGHT; y++) {
-      for (let x = 0; x < BOARD_WIDTH; x++) {
-        if (board[y][x] !== previousBoard[y][x]) {
-          const cell = gameBoard.children[y * BOARD_WIDTH + x];
-          switch (board[y][x]) {
-            case 'mouse':
-              cell.innerHTML = SVG_MOUSE;
-              break;
-            case 'cookie':
-              cell.innerHTML = SVG_COOKIE;
-              break;
-            case 'movable':
-              cell.style.backgroundColor = '#c0c0c0';
-              break;
-            case 'dino':
-              cell.innerHTML = SVG_CAT;
-              break;
-            case 'crown':
-              cell.innerHTML = SVG_CROWN;
-              break;
-            case 'exit':
-              cell.innerHTML = SVG_EXIT;
-              break;
-            default:
-              cell.innerHTML = '';
-              cell.style.backgroundColor = '#000';
-          }
-        }
+  const gameBoard = document.getElementById('game-board');
+  gameBoard.innerHTML = '';
+  for (let y = 0; y < BOARD_HEIGHT; y++) {
+    for (let x = 0; x < BOARD_WIDTH; x++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      switch (board[y][x]) {
+        case 'mouse':
+          cell.innerHTML = SVG_MOUSE;
+          break;
+        case 'cookie':
+          cell.innerHTML = SVG_COOKIE;
+          break;
+        case 'movable':
+          cell.style.backgroundColor = '#c0c0c0';
+          break;
+        case 'dino':
+          cell.innerHTML = SVG_CAT;
+          break;
+        case 'crown':
+          cell.innerHTML = SVG_CROWN;
+          break;
+        case 'exit':
+          cell.innerHTML = SVG_EXIT;
+          break;
       }
+      gameBoard.appendChild(cell);
     }
-    previousBoard = JSON.parse(JSON.stringify(board)); // Deep copy to track changes
   }
+}
+
   
   
       document.addEventListener('keydown', (event) => {
