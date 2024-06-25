@@ -1,3 +1,5 @@
+(function() {
+
 const BOARD_WIDTH = 20;
 const BOARD_HEIGHT = 15;
 const INITIAL_COOKIES = 5;
@@ -393,3 +395,5 @@ function initializeGame() {
 
     initializeGame();
     document.getElementById('start-button').addEventListener('click', initializeGame);
+
+})();
